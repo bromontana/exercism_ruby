@@ -7,44 +7,39 @@ class Complement
 
 
   @transcription_key = {"G"=>"C", "C"=>"G", "A"=>"U", "T"=>"A"}
-  @comp = ""
-  @sequence = ""
+
 
   def self.of_dna (sequence)
+    @comp = ""
     @sequence = sequence.to_str
 
-    unless @sequence.empty? || @sequence.length <= 1
-      @sequence.each { |i| @comp << @transcription_key[i] }
+    char_map = []
+
+    if @sequence.length > 1
+      @sequence.each_char { |i| char_map << i }
     else
-      @comp << @transcription_key[@sequence]
+      char_map << @sequence
+
+    char_map.each do |j|
+      if @transcription_key.key?(j)
+        @comp << @transcription_key[j]
+      else
+        @comp
+      end
     end
+  end
+    # else
+    #   @comp << @transcription_key[@sequence]
+
+
+    # if @sequence.empty? == false || @sequence.length > 1
+    #   @sequence.each_char { |i| @comp << @transcription_key[i] }
+    # # elsif @transcription_key.each { |k| @transcription_key[k] != @sequence }
+    # #   @comp = ""
+    # else
+    #   @comp << @transcription_key[@sequence]
+    # end
 
     return @comp
   end
-transcription_key = {"G"=>"C", "C"=>"G", "A"=>"U", "T"=>"A"}
-puts transcription_key["G"]
-
-
-
-  # @transcription_key = Hash.new
-  # @transcription_key["G"] = "C"
-  # @transcription_key["C"] = "G"
-  # @transcription_key["T"] = "A"
-  # @transcription_key["A"] = "U"
-  # def self.of_dna (sequence)
-  #
-  #   comp = ""
-  #   @sequence = sequence.to_str
-  #
-  #   if (sequence == true && sequence.length > 1)
-  #     @sequence.each_char { |i| comp << @transcription_key[i] && i == "G" || "C" || "T" || "A" }
-  #     return comp
-  #
-  #   else
-  #     comp << @transcription_key[@sequence]
-  #
-  #   end
-  #   return comp
-  #
-  # end
 end
